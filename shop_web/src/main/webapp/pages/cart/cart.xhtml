@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+<ui:composition template="/templates/page-template.xhtml">
+	<ui:define name="pageContent">
+			<section id="features">
+					<div class="container">
+						<header>
+							<h2> <strong>Koszyk</strong></h2>
+						</header>
+						<div class="card product">
+    <h:form id="form">
+        <p:dataView var="product" value="#{cartBB.getCart(remoteClient.details.id)}" rows="20" listIcon="pi pi-bars" style="padding: 2rem 0;">
+
+            <p:dataViewListItem>
+                <div style="display: flex; flex-direction: column; width:100%;">
+                	<div style="display: flex; flex-direction: row; align-items:center; justify-content: space-around;">
+	                    <p:graphicImage value="#{product.shoe.picture}" width="200"/>
+	                    <div style="display: flex; width:40%; justify-content: space-around; align-items: center;">
+	                        <div class="product-name">#{product.shoe.name}</div>
+	                        <div>
+		                        <i class="pi pi-tag product-category-icon"/><span
+		                            class="product-category">    #{product.shoe.category.catName}</span>
+	                           </div>
+	                    </div>
+	                    <div class="product-list-action">
+	                        <h:outputText value="#{product.shoe.price}" styleClass="product-price">
+	                            <f:convertNumber currencySymbol="PLN" type="currency"/>
+	                        </h:outputText>
+	                    </div>
+	                    <div style="display: flex; flex-direction: column;">
+	                    	<span><h:outputText value="Rozmiar: #{product.quantitySize.size.value}" /></span>
+	                    
+	                    </div>
+	                    		<p:commandButton value="-" update="form form2" action="#{cartBB.minusQuantity(product,product.quantitySize.id)}" styleClass="ui-button-danger" />   
+		                    	<span><h:outputText value="Ilość: #{product.orderQuantity}" /></span>
+		                    	<p:commandButton  value="+" update="form form2" styleClass="ui-button-success" action="#{cartBB.addQuantity(product, product.quantitySize.id)}"/>
+		                    	<h:commandButton value="USUŃ" style="cursor: pointer; background:red;" action="#{cartBB.deleteItem(product,product.shoe,product.quantitySize.size,product.quantitySize.id,product.quantitySize.quantity,product.orderQuantity)}"/>
+		                    	<h:inputHidden value="#{cartBB.getPrice(product.shoe.price,product.orderQuantity)}" disabled="true"/>
+                    </div>
+                </div>
+            </p:dataViewListItem>
+        </p:dataView>
+        <p:growl id="growl" showDetail="true" />
+	        <p:growl id="growl-sticky" for="sticky-key" showDetail="true" sticky="true" />
+    </h:form>
+    <h:form id="form2">
+    <h:panelGroup  rendered="#{cartBB.count(remoteClient.details.id) gt 0}">
+     	<h:commandButton value="Złóż zamówienie (#{cartBB.price} PLN)" style="cursor:pointer;" action="#{cartBB.order()}"></h:commandButton>
+    </h:panelGroup>
+    	
+							<p:growl id="growl" showDetail="true" />
+	        <p:growl id="growl-sticky" for="sticky-key" showDetail="true" sticky="true" />
+    </h:form>
+</div>
+				</div>
+ 
+			</section>
+		</ui:define>
+</ui:composition>
+</html>

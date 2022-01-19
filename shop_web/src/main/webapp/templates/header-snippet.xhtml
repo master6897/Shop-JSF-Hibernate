@@ -1,0 +1,52 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+				<!-- Header -->
+				<section id="header">
+					<div class="container">
+
+						<!-- Logo -->
+							<h1 id="logo"><h:link id="home" outcome="/pages/shoe/shoeList.xhtml">Sklep obuwniczy</h:link></h1>
+
+						<!-- Nav -->
+						<h:form id="navi">
+							<nav id="nav">
+								<ul>
+									<li><h:link class="icon solid fa-home" id="shoeList_id" outcome="/pages/shoe/shoeList.xhtml"><span>Strona główna</span></h:link></li>
+									<li>
+										<a href="#" class="icon fa-chart-bar"><span>Profil</span></a>
+										<ul>
+											<li><h:link id="user-description" outcome="/pages/user/description.xhtml">Informacje</h:link></li>
+											<li><h:link id="user-orderList" outcome="/pages/user/orderList.xhtml">Zamówienia</h:link></li>
+										</ul>
+									</li>
+									<h:panelGroup rendered="#{remoteClient.details.role eq 'admin'}">
+										<li style="border:none;">
+												<a href="#" class="icon fa-user"><span>Admin</span></a>
+											<ul>
+												<li><h:link id="add-shoe-id"  outcome="/pages/admin/addShoe.xhtml"><span style="border:none;">Dodaj produkt</span></h:link></li>
+												<li><h:link id="add-brand-id"  outcome="/pages/admin/addBrand.xhtml"><span style="border:none;">Dodaj firmę</span></h:link></li>
+												<li><h:link id="add-category-id"  outcome="/pages/admin/addCategory.xhtml"><span style="border:none;">Dodaj kategorię</span></h:link></li>
+											</ul>
+										</li>
+									</h:panelGroup>
+									<h:panelGroup rendered="#{remoteClient.details.role eq null}">
+										<li><h:link id="login_id" class="icon solid fa-sign-in-alt"  outcome="/pages/login.xhtml"><span>Zaloguj się</span></h:link></li>
+									</h:panelGroup>
+									<h:panelGroup rendered="#{not empty remoteClient.details}">
+										<li><h:commandLink id="login_id2" class="icon solid fa-sign-out-alt" action="#{loginBB.doLogout()}"><span>Wyloguj się</span></h:commandLink></li>
+									</h:panelGroup>
+									<li><h:link id="cart_id" class="icon solid fa-shopping-cart" outcome="/pages/cart/cart.xhtml"><span>Koszyk (#{cartBB.count(remoteClient.details.id)})</span></h:link></li>
+									<li><h:outputText rendered="#{not empty remoteClient.details}" value="Zalogowany: #{remoteClient.details.email}" /></li>
+								</ul>
+							</nav>
+						</h:form>
+					</div>
+				</section>
+
+
+</ui:composition>

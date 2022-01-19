@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+<ui:composition template="/templates/page-template.xhtml">
+	<ui:define name="pageContent">
+			<section id="features">
+					<div class="container">
+						<header>
+							<h2> <strong>Uzupełnij resztę danych</strong></h2>
+						</header>
+						<h:form>
+						<div style="display: flex; justify-content: center; align-items: center;">
+							<h2 style="color: red;">!</h2>
+							<p> Możesz wybrać alternatywny adres przypisany do Twojego konta. Jeżeli nie wybierzesz nic, zamówienie zostanie wysłane na adres podany podczas rejestracji </p>
+							<h2 style="color: red;">!</h2>
+						</div>
+							<p:selectOneRadio id="orderAdress" value="#{orderBB.adress}" layout="responsive" columns="3" varStatus="loop" style="margin-bottom: 2rem;">
+								<f:selectItems value="#{deliveryAdressBB.getAdresses(remoteClient.details.id)}" var="q" itemLabel="#{q.name}" itemValue='#{q.name}'/>
+							</p:selectOneRadio>
+							<p>Nie widzisz żadnej opcji?</p>
+							<h:commandButton value="Dodaj alternatywny adres" action="#{deliveryAdressBB.newAdress()}" style="cursor:pointer;"/>
+							<div style="display: flex; justify-content: center; align-items: center; margin: 2em 0;">
+								<p:toggleSwitch value="#{orderBB.agreement}"/>
+								<h5 class="p-mt-0">Potwierdzam, że zapoznałem sie z regulaminem i zobowiązuje się do zapłaty za zamówione produkty.</h5>
+	        				</div>
+								<h:commandButton value="Złóż zamówienie" action="#{orderBB.createOrder(remoteClient.details,remoteClient.details.id)}" style="cursor:pointer;" update="@form"/>
+								 <p:growl id="growl" showDetail="true" />
+	        <p:growl id="growl-sticky" for="sticky-key" showDetail="true" sticky="true" />
+						</h:form>
+				</div>
+ 
+			</section>
+		</ui:define>
+</ui:composition>
+</html>

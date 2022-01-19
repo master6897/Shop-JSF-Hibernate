@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">	
+	
+	<f:metadata>
+	<f:viewParam name="shoe" value="#{quantityBB.shoeId}"
+		converterMessage="Nieoczekiwany błąd"/> />
+</f:metadata>
+<ui:composition template="/templates/page-template.xhtml">
+	<ui:define name="pageContent">
+			<section id="features">
+					<div class="container">
+						<header>
+							<h2> <strong>Dodawanie obuwia</strong></h2>
+						</header>
+						<div class="row aln-center">
+						<h:form>
+							<h:panelGrid columns="3" cellpadding="5" styleClass="bottom-space">
+								<div>
+									<h:outputLabel value="Wybierz rozmiar" />
+									<p:selectOneRadio id="shoeSize" value="#{quantityBB.sizeId}" varStatus="loop" columns="3">
+										<f:selectItems value="#{sizeBB.getSizeList()}" var="s" itemLabel="#{s.value}" itemValue='#{s.id}'/>
+									</p:selectOneRadio>
+								</div>
+								
+								<h:outputLabel for="quantity" value="ilość:" />
+								<p:inputNumber id="quantity" value="#{quantityBB.quantity}"
+								required="true"	requiredMessage="podaj ilość" minValue="0"/>
+								<p:message for="quantity"></p:message>
+								
+								
+								
+							</h:panelGrid>
+									<p:messages />
+		
+						<h:commandButton value="Dodaj" action="#{quantityBB.addSizeQuantity()}" update="msg" />
+
+					</h:form>
+					
+					</div>
+					</div>
+			</section>
+		</ui:define>
+</ui:composition>
+</html>

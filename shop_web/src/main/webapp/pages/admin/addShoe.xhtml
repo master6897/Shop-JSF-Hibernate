@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+<ui:composition template="/templates/page-template.xhtml">
+	<ui:define name="pageContent">
+			<section id="features">
+					<div class="container">
+						<header>
+							<h2> <strong>Dodawanie obuwia</strong></h2>
+						</header>
+						<div class="row aln-center">
+						<h:form>
+							<h:panelGrid columns="3" cellpadding="5" styleClass="bottom-space">
+								<div>
+									<h:outputLabel value="Wybierz markę" />
+									<p:selectOneRadio id="shoeBrands" value="#{shoeAddBB.brand}" varStatus="loop" columns="3">
+										<f:selectItems value="#{brandsBB.getBrands()}" var="b" itemLabel="#{b.name}" itemValue='#{b.id}'/>
+									</p:selectOneRadio>
+								</div>
+								<div>
+									<h:outputLabel value="Wybierz kategorię" />
+									<p:selectOneRadio id="shoeCategories" value="#{shoeAddBB.category}" varStatus="loop" columns="3">
+										<f:selectItems value="#{categoriesBB.getCategories()}" var="c" itemLabel="#{c.catName}" itemValue='#{c.id}'/>
+									</p:selectOneRadio>
+								</div>	
+								<h:outputLabel for="model" value="model:" />
+								<p:inputText id="model" value="#{shoeAddBB.name}"
+									required="true"	requiredMessage="podaj model"/>
+								<p:message for="model"></p:message>
+								
+								<h:outputLabel for="price" value="cena:" />
+								<p:inputNumber id="price" value="#{shoeAddBB.price}"
+								required="true"	requiredMessage="podaj cenę" minValue="0"/>
+								<p:message for="price"></p:message>
+								
+								<h:outputLabel for="descr" value="opis:" />
+								<p:inputTextarea rows="6" cols="33" id="descr" value="#{shoeAddBB.descr}"
+								required="true"	requiredMessage="opis nie może być pusty" style="background:#e8e8e8; border:none; color: black;"/>
+								<p:message for="descr"></p:message>
+								
+								<h:outputLabel for="color" value="kolor:" />
+								<p:inputText id="color" value="#{shoeAddBB.color}"
+								required="true"	requiredMessage="podaj kolor"/>
+								<p:message for="color"></p:message>
+								
+								<h:outputLabel for="picture" value="URL zdjęcia:" />
+								<p:inputText id="picture" value="#{shoeAddBB.picture}"
+								required="true"	requiredMessage="podaj URL zdjęcia"/>
+								<p:message for="picture"></p:message>
+								
+								
+							</h:panelGrid>
+									<p:messages />
+		
+						<h:commandButton value="Dodaj" action="#{shoeAddBB.addShoe()}" update="msg" />
+
+					</h:form>
+					
+					</div>
+					</div>
+			</section>
+		</ui:define>
+</ui:composition>
+</html>

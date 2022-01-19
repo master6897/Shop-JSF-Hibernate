@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+<ui:composition template="/templates/page-template.xhtml">
+	<ui:define name="pageContent">
+			<section id="features">
+					<div class="container">
+						<header>
+							<h2> <strong>Rejestracja</strong></h2>
+						</header>
+						<div class="row aln-center">
+						<h:form id="form">
+							<h:panelGrid columns="3" cellpadding="5" styleClass="bottom-space" id="panel">
+							
+								<h:outputLabel for="email" value="email:" />
+								<p:inputText id="email" value="#{registerBB.email}"
+									required="true"	requiredMessage="podaj email" validatorMessage="Nieprawidłowy adres email">
+									<f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+								</p:inputText>
+								<p:message for="email"></p:message>
+								
+								<h:outputLabel for="pass" value="hasło:" />
+								<p:password id="pass" value="#{registerBB.pass}"
+								required="true"	requiredMessage="podaj hasło" toggleMask="true" redisplay="true"/>
+								<p:message for="pass"></p:message>
+								
+								<h:outputLabel for="pass_repeat" value="powtórz hasło" />
+								<p:password id="pass_repeat" value="#{registerBB.pass_repeat}"
+								required="true"	requiredMessage="podaj hasło" toggleMask="true" redisplay="true"/>
+								<p:message for="pass_repeat"></p:message>
+								
+								<h:outputLabel for="city" value="miejscowość:" />
+								<p:inputText id="city" value="#{registerBB.user.city}"
+									required="true"	requiredMessage="podaj miejscowość"/>
+								<p:message for="city"></p:message>
+								
+								<h:outputLabel for="post_code" value="kod pocztowy:" />
+								<p:inputMask id="post_code" value="#{registerBB.user.postCode}" 
+								required="true" requiredMessage="podaj kod pocztowy" mask="99-999" validateMask="true"/>
+								<p:message for="post_code"></p:message>
+								
+								<h:outputLabel for="street" value="ulica:" />
+								<p:inputText id="street" value="#{registerBB.user.street}"
+									required="true"	requiredMessage="podaj ulicę"/>
+								<p:message for="street"></p:message>
+								
+								<h:outputLabel for="adress" value="numer domu:" />
+								<p:inputNumber id="adress" value="#{registerBB.user.adress}"
+									required="true"	requiredMessage="podaj numer domu"/>
+								<p:message for="adress"></p:message>
+								
+								<h:outputLabel for="adress2" value="numer mieszkania (opcjonalne):" />
+								<p:inputNumber id="adress2" value="#{registerBB.user.adress2}"/>
+								<p:message for="adress2"></p:message>
+								
+								
+							</h:panelGrid>
+							<p:growl id="growl" showDetail="true" />
+	        <p:growl id="growl-sticky" for="sticky-key" showDetail="true" sticky="true" />
+		
+						<h:commandButton value="Rejestruj" action="#{registerBB.doRegister()}" update="panel" />
+
+					</h:form>
+					
+					</div>
+				</div>
+ 
+			</section>
+		</ui:define>
+</ui:composition>
+</html>

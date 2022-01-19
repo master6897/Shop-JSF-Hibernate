@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+<f:metadata>
+	<f:viewParam name="shoe" value="#{shoeDescriptionGETBB.shoe.id}"
+		converterMessage="Nieoczekiwany błąd"/>
+	<f:event type="preRenderView" listener="#{shoeDescriptionGETBB.onLoad()}" />
+</f:metadata>
+	
+<ui:composition template="/templates/page-template.xhtml">
+	<ui:define name="pageContent">
+			<section id="features">
+					<div class="container">
+						<h:form id="form">
+						<p:dataView var="shoe" value="#{shoeDescriptionGETBB.shoe}"
+                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                    layout="grid"  flex="true">
+							<p:dataViewGridItem>
+								<div class="col-4 col-6-medium col-12-small" style="padding: 1em;">
+											<p:graphicImage value="#{shoe.picture}" class="image featured" width="200"/>
+											<header>
+												<h1>#{shoe.brand.name}</h1>
+											</header>
+											<h2>#{shoe.name}</h2>
+											<p>#{shoe.descr}</p>
+											<h2>Wybierz rozmiar</h2>
+												 <p:selectOneRadio id="size" value="#{cartBB.size}" layout="responsive" columns="4" required="true" requiredMessage="Proszę wybrać rozmiar" varStatus="loop" panelStyleClass="hideDisabled" >
+										            <f:selectItems value="#{shoeQuantityBB.getList(shoe.id)}" var="q" itemLabel="#{q.size.value} Dostępna ilość: #{q.quantity}" itemValue='#{q.id}' itemDisabled="#{cartBB.disabled(q.quantity)}"/>
+										        </p:selectOneRadio>
+										        <div style="display: flex; width: 100%; justify-content: center; align-items: center; padding: 1.5rem;">
+												</div>
+											<div style="display: flex; width: 100%; justify-content: center; align-items: center;">
+												<div style="display: flex; width: 35%; justify-content: space-between; align-items: center;">
+													<h:commandButton value="Dodaj do koszyka" action="#{cartBB.add(shoe.id,remoteClient.details.id)}" update="msg" rendered="#{not empty remoteClient.details}" />
+													<h:panelGroup rendered="#{remoteClient.details.role eq 'admin'}">
+														<h:button class="form-button-submit button" style="cursor: pointer; margin-letf:3em;" value="Dodaj rozmiar" outcome="/pages/shoe/addShoeSize.xhtml">
+															<f:param name="shoe" value="#{shoe.id}" />
+														</h:button>
+													</h:panelGroup>
+												</div>
+											</div>
+									</div>
+								
+							<p:growl id="growl" showDetail="true" />
+	        <p:growl id="growl-sticky" for="sticky-key" showDetail="true" sticky="true" />
+							</p:dataViewGridItem>
+							</p:dataView>
+						</h:form>
+				</div>
+ 
+			</section>
+		</ui:define>
+</ui:composition>
+</html>

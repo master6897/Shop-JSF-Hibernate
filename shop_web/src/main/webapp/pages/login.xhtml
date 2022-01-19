@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+<ui:composition template="/templates/page-template.xhtml">
+	<ui:define name="pageContent">
+			<section id="features">
+					<div class="container">
+						<header>
+							<h2> <strong>Logowanie</strong></h2>
+						</header>
+						<div class="row aln-center">
+						<h:form>
+							<h:panelGrid columns="3" cellpadding="5" styleClass="bottom-space">
+							
+								<h:outputLabel for="email" value="email:" />
+								<p:inputText id="email" value="#{loginBB.email}"
+									required="true"	requiredMessage="podaj email"/>
+								<p:message for="email"></p:message>
+								
+								<h:outputLabel for="pass" value="hasło:" />
+								<p:password id="pass" value="#{loginBB.pass}"
+								required="true"	requiredMessage="podaj hasło" toggleMask="true" redisplay="true"/>
+								<p:message for="pass"></p:message>
+								
+								
+							</h:panelGrid>
+							<p:growl id="growl" showDetail="true" />
+	        <p:growl id="growl-sticky" for="sticky-key" showDetail="true" sticky="true" />
+		
+						<h:commandButton value="Zaloguj" action="#{loginBB.doLogin()}" update="@form" />
+
+					</h:form>
+					
+					</div>
+					<h3>Nie masz założonego konta?</h3>
+						<h:form>
+							<h:commandButton value="Zarejestruj się!" action="#{registerBB.register()}"/>
+						</h:form>
+				</div>
+ 
+			</section>
+		</ui:define>
+</ui:composition>
+</html>
